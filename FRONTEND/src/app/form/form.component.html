@@ -1,0 +1,5 @@
+{{nom}}
+<p><label>Nom</label><input [(ngModel)]="nom"></p>
+<button (click)="click()" [disabled]="!valid">Envoyer</button> 
+
+<app-adresse [nomAdresse] = "nom"></app-adresse>
