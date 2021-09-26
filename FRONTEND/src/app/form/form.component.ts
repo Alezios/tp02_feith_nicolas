@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { User } from '../user';
 
 @Component({
   selector: 'app-form',
@@ -9,12 +10,46 @@ export class FormComponent implements OnInit {
 
   constructor() { }
 
-  nom : string = "toto";
-  valid : boolean = true;
+  user: User = new User();
 
-  click(){
-    this.valid = false;
-    console.log("clic déclenché");
+  submitted: boolean = false;
+
+  countries: string[] = [
+  'Austria',
+  'Belgium',
+  'Bulgaria',
+  'Croatia',
+  'Cyprus',
+  'Czech Republic',
+  'Denmark',
+  'Estonia',
+  'Finland',
+  'France',
+  'Germany',
+  'Greece',
+  'Hungary',
+  'Ireland',
+  'Italy',
+  'Latvia',
+  'Lithuania',
+  'Luxembourg',
+  'Malta',
+  'Netherlands',
+  'Poland',
+  'Portugal',
+  'Romania',
+  'Slovakia',
+  'Slovenia',
+  'Spain',
+  'Sweden',
+  'United Kingdom'];
+
+  onSubmit(): void {
+    this.submitted = true;
+  }
+
+  areFieldsOk(): boolean {
+    return true;
   }
 
   ngOnInit(): void {

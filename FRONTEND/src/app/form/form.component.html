@@ -1,57 +1,98 @@
-<form id="subscription-form" action="" method="get">
+<form (ngSubmit)="onSubmit()" #userForm="ngForm" *ngIf="!submitted">
     <div class="row g-3">
         <div class="col-sm-6">
             <label class="form-label" for="last-name">Nom: </label>
-            <input class="form-control" type="text" name="last-name" id="last-name" required pattern="[\p{L}-]+" />
+            <input [(ngModel)]="user.nom" class="form-control" type="text" name="last-name" id="last-name" required pattern="[a-zA-Z-]+" #lastName="ngModel"/>
+            <div class="alert alert-danger" *ngIf="!lastName.valid && !lastName.untouched">
+                Nom requis. Pas d'espace(s), chiffre(s) ni caractère(s) spéciaux.
+            </div>
         </div>
         <div class="col-sm-6">
             <label class="form-label" for="first-name">Prénom: </label>
-            <input class="form-control" type="text" name="first-name" id="first-name" required pattern="[\p{L}-]+" />
+            <input [(ngModel)]="user.prenom" class="form-control" type="text" name="first-name" id="first-name" required pattern="[a-zA-Z-]+" #firstName="ngModel"/>
+            <div class="alert alert-danger" *ngIf="!firstName.valid && !firstName.untouched">
+                Prénom requis. Pas d'espace(s), chiffre(s) ni caractère(s) spéciaux.
+            </div>
         </div>
     </div>
     <div class="row g-2">
         <div class="col-md-4">
             <label class="form-label" for="adress">Adresse: </label>
-            <input class="form-control" type="text" name="adress" id="adress" required />
+            <input [(ngModel)]="user.adresse" class="form-control" type="text" name="adress" id="adress" required #adress="ngModel"/>
+            <div class="alert alert-danger" *ngIf="!adress.valid && !adress.untouched">
+                Adresse requise.
+            </div>
         </div>
         <div class="col-md-4">
             <label class="form-label" for="cp">Code postal: </label>
-            <input class="form-control" type="text" name="cp" id="cp" required pattern="[0-9]{5}" />
+            <input [(ngModel)]="user.cp" class="form-control" type="text" name="cp" id="cp" required #cp="ngModel"/>
+            <div class="alert alert-danger" *ngIf="!cp.valid && !cp.untouched">
+                Code postal requis.
+            </div>
         </div>
         <div class="col-md-4">
             <label class="form-label" for="city">Ville: </label>
-            <input class="form-control" type="text" name="city" id="city" required pattern="[\p{L}-]+" />
+            <input [(ngModel)]="user.ville" class="form-control" type="text" name="city" id="city" required pattern="[a-zA-Z-]+" #city="ngModel"/>
+            <div class="alert alert-danger" *ngIf="!city.valid && !city.untouched">
+                Ville requise. Pas d'espace(s), chiffre(s) ni caractère(s) spéciaux.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="country">Pays: </label>
+            <select [(ngModel)]="user.pays" class="form-control" name="country" id="country" required #country="ngModel">
+                <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="!country.valid && !country.untouched">
+                Merci de sélectionner un pays.
+            </div>
         </div>
     </div>
     <div>
         <label class="form-label" for="phone">Tel. (optionnel): </label>
-        <input class="form-control" type="tel" name="phone" id="phone" pattern="[0-9]{10}" />
+        <input [(ngModel)]="user.tel" class="form-control" type="tel" name="phone" id="phone" pattern="[0-9]{10}" #phone="ngModel"/>
+        <div class="alert alert-danger" *ngIf="!phone.valid">
+            Si renseigné respecter le format à 10 chiffres.
+        </div>
     </div>
     <div>
         <label class="form-label" for="email">Email: </label>
-        <input class="form-control" type="email" name="email" id="email" required />
+        <input [(ngModel)]="user.email" class="form-control" type="email" name="email" id="email" required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" #email="ngModel"/>
+        <div class="alert alert-danger" *ngIf="!email.valid && !email.untouched">
+            Email requis. Merci de fournir une adresse email valide.
+        </div>
     </div>
     <div>
         <label class="form-label">Civilité:
-            <input class="form-check-input" type="radio" name="civilite" id="mr" checked />
+            <input [(ngModel)]="user.civilite" class="form-check-input" type="radio" name="civilite" id="mr" value="M." checked />
             <label class="form-check-label" for="mr">M.</label>
-            <input class="form-check-input" type="radio" name="civilite" id="mrs" />
+            <input [(ngModel)]="user.civilite" class="form-check-input" type="radio" name="civilite" id="mrs" value="Mme." />
             <label class="form-check-label" for="mr">Mme.</label>
         </label>
     </div>
     <div>
         <label class="form-label" for="login">Choisissez un identifiant de connexion: </label>
-        <input class="form-control" type="text" name="login" id="login" required pattern="[\p{L}-]+" />
+        <input [(ngModel)]="user.login" class="form-control" type="text" name="login" id="login" required pattern="[a-zA-Z-]+" #login="ngModel"/>
+        <div class="alert alert-danger" *ngIf="!login.valid && !login.untouched">
+            Identifiant requis. Pas d'espace(s), chiffre(s) ni caractère(s) spéciaux.
+        </div>
     </div>
     <div>
-        <label class="form-label" for="password">Choisissez un mot de passe (6 caractères minimum): </label>
-        <input class="form-control" type="password" name="password" id="password" minlength="6" />
+        <label class="form-label" for="password">Choisissez un mot de passe: </label>
+        <input [(ngModel)]="user.password" class="form-control" type="password" name="password" id="password" minlength="6" required #password="ngModel"/>
+        <div class="alert alert-danger" *ngIf="!password.valid && !password.untouched">
+            Mot de passe de 6 caractères minimum requis.
+        </div>
     </div>
     <div>
         <label class="form-label" for="password">Confirmer le mot de passe: </label>
-        <input class="form-control" type="password" name="confirm-password" id="confirm-password" minlength="6" />
+        <input [(ngModel)]="user.confirmPassword" class="form-control" type="password" name="confirm-password" id="confirm-password" minlength="6" required #confirmPassword="ngModel"/>
+        <div class="alert alert-danger" *ngIf="(user.password != confirmPassword.value) && !confirmPassword.untouched">
+            Le mot de passe et sa confirmation ne correspondent pas.
+        </div>
     </div>
     <div>
-        <input class="btn btn-primary" type="submit" value="S'inscrire">
+        <input class="btn btn-primary" type="submit" value="S'inscrire" [disabled]="!userForm.form.valid">
     </div>
 </form>
+
+<app-form-recap [user]="user" *ngIf="submitted"></app-form-recap>
