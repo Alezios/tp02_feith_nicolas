@@ -5,12 +5,16 @@ import {FormsModule} from '@angular/forms'; //import manuel obligatoire pour le 
 import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { AdresseComponent } from './adresse/adresse.component';
+import { TetiereComponent } from './tetiere/tetiere.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
-    AdresseComponent
+    AdresseComponent,
+    TetiereComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
